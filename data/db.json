@@ -1,0 +1,36 @@
+{
+  "categories": [
+    { "id": 1, "nom": "Sneakers", "slug": "sneakers" },
+    { "id": 2, "nom": "Ville & Formel", "slug": "ville-formel" },
+    { "id": 3, "nom": "Sport & Running", "slug": "sport-running" }
+  ],
+  "brands": [
+    { "id": 1, "nom": "Nike", "slug": "nike" },
+    { "id": 2, "nom": "Adidas", "slug": "adidas" },
+    { "id": 3, "nom": "Puma", "slug": "puma" }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "nom": "Sneaker Air Runner",
+      "slug": "sneaker-air-runner",
+      "description": "Chaussure de sport légère et confortable pour un usage quotidien.",
+      "prix": 89.99,
+      "brand_id": 1,
+      "category_id": 1,
+      "active": true,
+      "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "id": 2,
+      "nom": "Classic Urban Cuir",
+      "slug": "classic-urban-cuir",
+      "description": "Chaussure de ville élégante en cuir véritable.",
+      "prix": 129.00,
+      "brand_id": 2,
+      "category_id": 2,
+      "active": true,
+      "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=600&q=80"
+    }
+  ]
+}
