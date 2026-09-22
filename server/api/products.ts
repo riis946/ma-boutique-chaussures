@@ -1,0 +1,55 @@
+import prisma from '../utils/prisma'
+
+export default defineEventHandler(async (event) => {
+  const method = getMethod(event)
+
+  // 1. Gérer la récupération de tous les produits (GET)
+  if (method === 'GET') {
+    try {
+      const products = await prisma.product.findMany({
+        include: {
+          brand: true,
+          category: true,
+          images: true,
+          variants: {
+            include: {
+              size: true
+            }
+          }
+        }
+      })
+      return { success: true, data: products }
+    } catch (error: any) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: `Erreur lors de la récupération des produits : ${error.message}`
+      })
+    }
+  }
+
+  // 2. Gérer l'ajout d'un produit (POST)
+  if (method === 'POST') {
+    try {
+      const body = await readBody(event)
+      
+      const newProduct = await prisma.product.create({
+        data: {
+          nom: body.nom,
+          slug: body.slug,
+          description: body.description,
+          prix: body.prix,
+          brandId: body.brandId,
+          categoryId: body.categoryId,
+          active: body.active ?? true,
+        }
+      })
+
+      return { success: true, data: newProduct }
+    } catch (error: any) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: `Erreur lors de la création du produit : ${error.message}`
+      })
+    }
+  }
+})
