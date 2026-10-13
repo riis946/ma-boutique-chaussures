@@ -6,18 +6,7 @@ export default defineEventHandler(async (event) => {
   // 1. Gérer la récupération de tous les produits (GET)
   if (method === 'GET') {
     try {
-      const products = await prisma.product.findMany({
-        include: {
-          brand: true,
-          category: true,
-          images: true,
-          variants: {
-            include: {
-              size: true
-            }
-          }
-        }
-      })
+      const products = await prisma.product.findMany()
       return { success: true, data: products }
     } catch (error: any) {
       throw createError({
@@ -35,12 +24,10 @@ export default defineEventHandler(async (event) => {
       const newProduct = await prisma.product.create({
         data: {
           nom: body.nom,
-          slug: body.slug,
           description: body.description,
-          prix: body.prix,
-          brandId: body.brandId,
-          categoryId: body.categoryId,
-          active: body.active ?? true,
+          prix: Number(body.prix),
+          stock: Number(body.stock) || 0,
+          image: body.image
         }
       })
 

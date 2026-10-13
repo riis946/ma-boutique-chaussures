@@ -13,7 +13,7 @@ model User {
   prenom    String
   email     String   @unique
   password  String
-  role      String   @default("client") // 'client' ou 'admin'
+  role      String   @default("client")
   orders    Order[]
   createdAt DateTime @default(now())
 }
@@ -25,14 +25,14 @@ model Product {
   prix        Float
   stock       Int
   image       String?
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
 }
 
 model Order {
-  id        Int         @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   userId    Int
-  user      User        @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   total     Float
-  status    String      @default("en_attente") // 'en_attente', 'expedie', 'livre'
-  createdAt DateTime    @default(now())
+  status    String   @default("en_attente")
+  createdAt DateTime @default(now())
 }
