@@ -1,4 +1,6 @@
-import prisma from '../../utils/prisma'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
   const idParam = getRouterParam(event, 'id')
@@ -10,7 +12,6 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // Conversion de l'ID en nombre (number)
   const id = Number(idParam)
 
   if (isNaN(id)) {
@@ -23,16 +24,6 @@ export default defineEventHandler(async (event) => {
   try {
     const product = await prisma.product.findUnique({
       where: { id },
-      include: {
-        brand: true,
-        category: true,
-        images: true,
-        variants: {
-          include: {
-            size: true,
-          },
-        },
-      },
     })
 
     if (!product) {
