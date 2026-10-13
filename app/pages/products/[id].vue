@@ -12,41 +12,28 @@
 
       <!-- Fiche Produit -->
       <div v-else-if="product" class="bg-white rounded-xl shadow-md overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
-        <!-- Visuel / Image -->
-        <div class="bg-gray-100 rounded-lg flex items-center justify-center h-80 text-gray-400">
-          <span class="text-lg">👟 [Image du produit]</span>
+        <!-- Vraie Image du produit -->
+        <div class="bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden h-80">
+          <img 
+            v-if="product.image" 
+            :src="product.image" 
+            :alt="product.nom" 
+            class="w-full h-full object-cover rounded-lg" 
+          />
+          <span v-else class="text-gray-400 text-lg">👟 [Pas d'image]</span>
         </div>
 
         <!-- Informations -->
         <div class="flex flex-col justify-between">
           <div>
             <span class="text-xs uppercase tracking-wider font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded">
-              {{ product.category?.nom || 'Chaussures' }}
+              Chaussures
             </span>
             <h1 class="text-3xl font-extrabold text-gray-900 mt-2">{{ product.nom }}</h1>
             <p class="text-2xl font-bold text-indigo-600 mt-4">{{ product.prix }} €</p>
             
             <p class="text-gray-600 mt-4 leading-relaxed">{{ product.description }}</p>
-
-            <!-- Sélection des tailles (si variantes disponibles) -->
-            <div v-if="product.variants && product.variants.length > 0" class="mt-6">
-              <h3 class="text-sm font-medium text-gray-950 mb-2">Tailles disponibles :</h3>
-              <div class="flex gap-2">
-                <button 
-                  v-for="variant in product.variants" 
-                  :key="variant.id"
-                  @click="selectedSize = variant.size?.valeur || 'Unique'"
-                  :class="[
-                    'border rounded-md px-3 py-1.5 text-sm transition',
-                    selectedSize === (variant.size?.valeur || 'Unique')
-                      ? 'border-indigo-600 bg-indigo-50 text-indigo-600 font-bold'
-                      : 'border-gray-300 hover:border-indigo-600 text-gray-700'
-                  ]"
-                >
-                  {{ variant.size?.valeur || 'Unique' }}
-                </button>
-              </div>
-            </div>
+            <p class="text-sm text-gray-500 mt-4">Stock disponible : {{ product.stock }} unités</p>
           </div>
 
           <!-- Bouton d'action "Ajouter au panier" -->
@@ -72,14 +59,9 @@ const productId = route.params.id
 const { data: response, pending, error } = await useFetch(`/api/products/${productId}`)
 const product = computed(() => response.value?.data || null)
 
-// Gestion du panier et de la taille sélectionnée
-const { addToCart } = useCart()
-const selectedSize = ref('Unique')
-
 const handleAddToCart = () => {
   if (product.value) {
-    addToCart(product.value, selectedSize.value)
-    alert(`"${product.value.nom}" (Taille : ${selectedSize.value}) a été ajouté à votre panier !`)
+    alert(`"${product.value.nom}" a été ajouté à votre panier !`)
   }
 }
 </script>

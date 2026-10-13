@@ -11,6 +11,11 @@
         <!-- Navigation & Actions -->
         <div class="flex items-center gap-6">
           <NuxtLink to="/" class="text-sm font-medium text-gray-700 hover:text-indigo-600">Catalogue</NuxtLink>
+          
+          <!-- Ajout du lien vers le tableau de gestion des produits -->
+          <NuxtLink to="/admin/products" class="text-sm font-medium text-gray-700 hover:text-indigo-600">
+            Gestion Produits 📊
+          </NuxtLink>
 
           <!-- Lien Panier -->
           <NuxtLink to="/cart" class="relative inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
